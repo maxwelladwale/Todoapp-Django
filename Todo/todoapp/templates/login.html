@@ -1,0 +1,19 @@
+<html>
+<head>
+</head>
+<body>
+    {% include 'navbar.html'%}
+    <h2>Login Form</h2>
+    <form method="POST" action="{% url 'todoapp:logind' %}" >
+        {% csrf_token %}
+        <label>Username</label><br/>
+        <input type="text" name="username" placeholder="Enter username or Email">
+        <br/><br/>
+        
+        <label>Password</label><br/>
+        <input type="text" name="password" placeholder="Enter your password here">
+        <br/><br/>
+        <button type="submit" value="Login" name="Login">Login</button>
+    </form>
+</body>
+</html>

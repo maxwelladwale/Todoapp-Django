@@ -1,0 +1,100 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>TodoList</title>
+  </head>
+  <body>
+    <header>
+    <div style="width:300px; float:left;">
+      <h1>TodoList</h1>
+      
+        <ul style="background-color:yellow; width: 200px;">
+          <li>All Todos : {{ todoscount }}</li>
+          <li>Completed : {{ completetodos }}</li>
+          <li>Incomplete : {{ incompletetodos }}</li>
+        </ul>
+
+        {% comment %} Start Filter {% endcomment %}
+        <form method="POST" action="filtertodos">
+        {% csrf_token %}
+        <select name="category">
+          {% for category in category %}
+            <option>
+               <li name="category"> {{category.name}}</li>
+            </option>
+          {% endfor %}
+        </select>
+        <input type="submit" value="Filter" />
+        </form><br/>
+        {% comment %}End of Filter{% endcomment %}
+
+        {% comment %} Start todolist {% endcomment %}
+        {% for category2 in category2 %}
+        <div style="clear:both;" class="{% if category2.isCompleted %} todo-complete {% endif %}">
+          <form style="display: inline;" method="post" action="{% url 'todoapp:update' category2.id %}">
+          {% csrf_token %}
+            <input type="checkbox" name="isCompleted" onchange="this.form.submit()" {% if category2.isCompleted %} checked
+            {% endif %} class="todo-status-checkbox" title="{% if not category2.isCompleted %} mark as done {% else %} mark undone {% endif %}">
+          </form>
+          {{ category2.title }} : {{ category2.description }}: {{ category2.category }}
+
+          <a href="{% url 'todoapp:delete' category2.id %}" title="Delete">Delete</a>
+        </div> <br/>
+        {% endfor %}
+        {% comment %} End todolist {% endcomment %}
+      </div>
+      <br>
+    </div>
+    
+    <div style="float:right; width:300px;">
+    <h2>Add Todo</h2>
+    {% comment %} Add todolist form {% endcomment %}
+      <form action="add" method="POST">
+        {% csrf_token %}
+        <label for="title">Todo</label><br />
+        <input type="text" name="title" id="title" /><br>
+        <label for="text">Category</label><br/>
+        <select name="category">
+          {% for category in category %}
+            <option>
+              <li> {{category.name}}</li>
+            </option>
+          {% endfor %}
+        </select><br/>
+        <label for="text">Description</label><br />
+        <textarea name="description" id="description"></textarea>
+        <br><br>
+        <input type="submit" value="ADD TODO" />
+      </form>
+
+      {% comment %} End todolist form {% endcomment %}
+      
+      <h2> Category List </h2> 
+      {% comment %} Start category list {% endcomment %}
+      {% for category in category %}
+        <div style="clear:both;">
+          {{ category.name }}
+          <a href="{% url 'todoapp:deletecategory' category.id %}" title="Delete">Delete</a>
+        </div>
+      {% endfor %}
+      {% comment %} End category List {% endcomment %}
+      <br/>
+       
+       {% comment %} Start add category form {% endcomment %}
+      <form action="addcategory" method="POST">
+        {% csrf_token %}
+        <label for="title">Name</label><br />
+        <input type="text" name="name" id="name" />
+        <br><br>
+        <input type="submit" value="ADD Category" />
+      </form>
+      {% comment %} End add category form {% endcomment %}
+
+    </div>
+    </header>
+  </body>
+</html>

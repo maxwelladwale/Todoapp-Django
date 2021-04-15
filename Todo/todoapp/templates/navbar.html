@@ -1,0 +1,7 @@
+{% if user.is_authenticated %}
+    <h3><a href="{% url 'todoapp:lhome' %}">Home</a></h3>
+    <h3><a href="{% url 'todoapp:logout'%}">Logout</a></h3>
+    {% else %}
+    <h3><a href="{% url 'todoapp:userloginurl'%}">Login</a></h3>
+    <h3><a href="{% url 'todoapp:register'%}">Signup</a></h3>
+{% endif %}

@@ -1,0 +1,29 @@
+<html>
+<head>
+</head>
+<body>
+    <h2>Registration Form</h2>
+    <form method="POST" action="{% url 'todoapp:register' %}" >
+        {% csrf_token %}
+        <label>First name</label><br/>
+        <input type="text" name="fname" placeholder="Enter your first name here">
+        <br/><br/>
+        <label>Second Name</label><br/>
+        <input type="text" name="sname" placeholder="Enter your second name here">
+        <br/><br/>
+        <label>Username</label><br/>
+        <input type="text" name="username" placeholder="Enter username">
+        <br/><br/>
+        <label>Email</label><br/>
+        <input type="text" name="email" placeholder="Enter Email">
+        <br/><br/>
+        <label>Password</label><br/>
+        <input type="text" name="password1" placeholder="Enter your password here">
+        <br/><br/>
+        <label>Confirm Password</label><br/>
+        <input type="text" name="password2" placeholder="Repeat password">
+        <br/><br/>
+        <button type="submit" value="Register" name="Register">Register</button>
+    </form>
+</body>
+</html>

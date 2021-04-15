@@ -1,0 +1,53 @@
+{% include 'navbar.html' %}
+<style>
+      table ,tr,td{
+      border: 1px solid black;
+      border-collapse: collapse;
+      width: 300px;
+      align:center;
+      }
+    </style>
+All permisions<br>
+{% comment %} <form action="/addpermision" method="POST">
+{%csrf_token%} {% endcomment %}
+{% comment %} {% for result in allpermisions %} {% endcomment %}
+{% comment %} <ul> {% endcomment %}
+   {% comment %} <li><input type="checkbox" name="permision"> {{ result.name }}</li> {% endcomment %}
+   {% comment %} <a href="/addpermision/{{result.id}}">add</a> {% endcomment %}
+{% comment %} </ul> {% endcomment %}
+{% comment %} {% endfor %} {% endcomment %}
+{% comment %} <br> {% endcomment %}
+{% comment %} </form> {% endcomment %}
+
+<form action="/addpermision/" method="POST">
+{%csrf_token%} 
+{% for result in allpermisions %}
+<ul>
+   <li><input type="text" name="permision" id="permision"> {{ result.name }}</li>
+<input type="text" value="{{result.id}}" id="id" name="id"></input>
+<button type="submit">Submit</button>
+</ul>
+{% endfor %}
+<br>
+</form>
+
+
+{% for result in permisions %}
+<br>Permisions Assigned to {{ result.user_id }}<hr>
+<br>
+{% endfor %}
+
+<table class="table">
+    <tr>
+        <th>Action</th>
+        <th>Name</th>
+        <th>User</th>
+    </tr>
+    {% for permision in permisions %}
+        <tr>
+            <td> <input type="checkbox"> </td>
+            <td> {{ permision.permisions_id }} </td>
+            <td> {{ permision.user_id }} </td>
+        </tr>
+    {% endfor %}
+</table>
